@@ -13,8 +13,8 @@ console.debug('starting server')
 
 module.exports = (MONGODB_URL, PORT) => {
 
-    mongoose.connect(MONGODB_URL)
-    .then(() => {
+    // mongoose.connect(MONGODB_URL)
+    // .then(() => {
         console.info(`connected to database ${MONGODB_URL}`)
         
         const app = express()
@@ -55,8 +55,8 @@ module.exports = (MONGODB_URL, PORT) => {
                     })
                 }
             })
-        })
-        .catch(error => {
-            throw new Error(error)
-    })
+    //     })
+    //     .catch(error => {
+    //         throw new Error(error)
+    // })
 }
