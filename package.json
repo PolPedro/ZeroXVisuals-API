@@ -14,6 +14,7 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.18",
+    "xhr2": "^0.2.1",
     "zeroxvisuals-api": "file:ZeroXVisuals-api",
     "zeroxvisuals-commons": "file:ZeroXVisuals-commons",
     "zeroxvisuals-data": "file:ZeroXVisuals-data",
@@ -21,7 +22,5 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "xhr2": "^0.2.1"
-  }
+  "devDependencies": {}
 }
