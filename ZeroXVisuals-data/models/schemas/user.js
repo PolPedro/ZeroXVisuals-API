@@ -26,5 +26,5 @@ module.exports = new Schema({
         required: true
     },
 
-    productsbuy : [{products}]
+    productsbuy : [products]
 })

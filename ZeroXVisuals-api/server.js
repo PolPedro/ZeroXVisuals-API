@@ -5,7 +5,7 @@ require('dotenv').config()
 
 const express = require('express')
 const { name, version } = require('./package.json')
-const {cors } = require('./middlewares')
+const {cors} = require('./middlewares')
 const { mongoose } = require('zeroxvisuals-data')
 const { api } = require('./routes')
 

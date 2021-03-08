@@ -1,4 +1,5 @@
 const { Schema } = require('mongoose')
+const rates = require('./rates')
 
 module.exports = new Schema({
 
@@ -25,6 +26,8 @@ module.exports = new Schema({
     link: {
         type: String,
         required: true
-    }
+    },
+
+    rates : [rates]
      
 })
