@@ -4,7 +4,8 @@ const { utils: { Rate } } = require('zeroxvisuals-commons')
 module.exports = new Schema({
     userId: {
         type: ObjectId,
-        required: true,
+        require: true,
+        ref: 'User'
     },
 
     stars: {

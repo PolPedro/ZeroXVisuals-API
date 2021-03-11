@@ -34,9 +34,20 @@ module.exports = (name, surname, email, password) => {
 
         const hash = await bcrypt.hash(password, 10)
 
-        await User.create({ name, surname, email, password: hash }).then(function cart(params) {
-            creatCart(params._id)
-        })
+        const newUser = await User.create({ name, surname, email, password: hash })
+
+        //creat the cart and link the cart for the user
+        try{
+
+            newUser.cart = await creatCart(newUser._id)
+
+        }catch(error){
+
+            throw new DuplicityError(error.message)
+
+        }
+
+        await newUser.save()
 
     })()
 }

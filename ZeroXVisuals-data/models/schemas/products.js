@@ -1,5 +1,5 @@
 const { Schema } = require('mongoose')
-const rates = require('./rates')
+const rate = require('./rates')
 
 module.exports = new Schema({
 
@@ -28,6 +28,6 @@ module.exports = new Schema({
         required: true
     },
 
-    rates : [rates]
+    rates : [rate],
      
 })

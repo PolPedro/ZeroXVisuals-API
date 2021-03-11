@@ -17,6 +17,6 @@ module.exports = new Schema({
         require: true,
     },
 
-    products: [products],
+    products: [{type: ObjectId, ref:'Product'}],
      
 })

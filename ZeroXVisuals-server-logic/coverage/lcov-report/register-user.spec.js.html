@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>50/50</span>
+                <span class='fraction'>54/54</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>47/47</span>
+                <span class='fraction'>51/51</span>
             </div>
         
             
@@ -144,7 +144,13 @@
 <a name='L85'></a><a href='#L85'>85</a>
 <a name='L86'></a><a href='#L86'>86</a>
 <a name='L87'></a><a href='#L87'>87</a>
-<a name='L88'></a><a href='#L88'>88</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -161,6 +167,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
@@ -182,6 +189,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -239,16 +251,17 @@ const registerUser = require('./register-user')
 const { random } = Math
 const { expect } = require('chai')
 require('zeroXVisuals-commons/polyfills/json')
-const { mongoose, models: { User } } = require('zeroXVisuals-data')
+const { mongoose, models: { User, Cart } } = require('zeroXVisuals-data')
 const bcrypt = require('bcryptjs')
 &nbsp;
 describe('logic - register user', () =&gt; {
     before(() =&gt; mongoose.connect(MONGODB_URL))
 &nbsp;
-    let name, surname, email, password, adress
+    let name, surname, email, password
 &nbsp;
     beforeEach(async () =&gt; {
         await User.deleteMany()
+        await Cart.deleteMany()
 &nbsp;
         name = `name-${random()}`
         surname = `surname-${random()}`
@@ -257,7 +270,7 @@ describe('logic - register user', () =&gt; {
     })
 &nbsp;
     it('should succeed on valid data', async () =&gt; {
-        const result = await registerUser(name, surname, email, password, adress)
+        const result = await registerUser(name, surname, email, password)
 &nbsp;
         expect(result).to.be.undefined
 &nbsp;
@@ -270,16 +283,21 @@ describe('logic - register user', () =&gt; {
         expect(user.name).to.equal(name)
         expect(user.surname).to.equal(surname)
         expect(user.email).to.equal(email)
+        expect(user.cart).to.exist
 &nbsp;
         const match = await bcrypt.compare(password, user.password)
 &nbsp;
         expect(match).to.be.true
+&nbsp;
+        const cart = Cart.findById(user.cart)
+&nbsp;
+        expect(cart).to.exist
     })
 &nbsp;
     it('should fail on invalid argument', async () =&gt; {
         try{
 &nbsp;
-            const result = await registerUser(undefined, surname, email, password, adress)
+            const result = await registerUser(undefined, surname, email, password)
             // expect(result).to.exist shoud not reach this point
         }catch(error){
             expect(error).to.exist
@@ -289,7 +307,7 @@ describe('logic - register user', () =&gt; {
     it('should fail on invalid password', async () =&gt; {
         try{
 &nbsp;
-            const result = await registerUser(name, surname, email, '1a4', adress)
+            const result = await registerUser(name, surname, email, '1a4')
             // expect(result).to.exist shoud not reach this point
         }catch(error){
             expect(error).to.exist
@@ -300,11 +318,11 @@ describe('logic - register user', () =&gt; {
 &nbsp;
 &nbsp;
     describe('when user already exists', () =&gt; {
-        beforeEach(() =&gt; User.create({ name, surname, email, password, adress }))
+        beforeEach(() =&gt; User.create({ name, surname, email, password }))
 &nbsp;
         it('should fail on trying to register an existing user', async () =&gt; {
             try {
-                await registerUser(name, surname, email, password, adress)
+                await registerUser(name, surname, email, password)
                 // throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.exist
@@ -315,7 +333,7 @@ describe('logic - register user', () =&gt; {
         })
     })
 &nbsp;
-    afterEach(() =&gt; User.deleteMany())
+    afterEach(() =&gt;{ User.deleteMany(), Cart.deleteMany()})
 &nbsp;
     after(mongoose.disconnect)
 })</pre></td></tr></table></pre>
@@ -325,7 +343,7 @@ describe('logic - register user', () =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Fri Mar 05 2021 11:43:23 GMT+0100 (GMT+01:00)
+                at Wed Mar 10 2021 18:01:29 GMT+0100 (GMT+01:00)
             </div>
         </div>
         <script src="prettify.js"></script>
