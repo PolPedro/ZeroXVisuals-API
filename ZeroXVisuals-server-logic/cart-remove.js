@@ -1,5 +1,5 @@
 /**
- * Cart add
+ * Cart Remove 
  *
  * @param {string} userId 
  * @param {string} productId 
@@ -16,13 +16,11 @@
  
  
  module.exports = (userId, productId) => {
-
-    String.validate.notVoid(userId)
-    String.validate.notVoid(productId)
+    
+     String.validate.notVoid(userId)
+     String.validate.notVoid(productId)
  
     return (async () => {
-
-        //TODO no permitir que se pueda coger 2 veces el mismo prouducto
 
         const cart = await Cart.findOne({user: userId})
 
@@ -32,9 +30,15 @@
 
         if (!product) throw new UnexistenceError(`product with id:${productId} dont exists`)
 
-        cart.products.unshift(productId)
+        // find product id and errase it 
 
-        cart.quantity += 1
+        const index = cart.products.findIndex((element)=> {
+            return element._id.toString() === productId.toString()
+        })
+
+        cart.products.splice(index, 1)
+
+        cart.quantity -= 1
 
         await cart.save()
 

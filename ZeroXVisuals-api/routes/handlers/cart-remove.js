@@ -1,5 +1,5 @@
 const { handleError } = require('../../helpers')
-const {addCart} = require('zeroxvisuals-server-logic')
+const {cartRemove} = require('zeroxvisuals-server-logic')
 
 module.exports = (req, res) => {
     
@@ -7,7 +7,7 @@ module.exports = (req, res) => {
     const { body: { productId } } = req
 
     try {
-        addCart(userId, productId)
+        cartRemove(userId, productId)
             .then(() => res.status(201).send())
             .catch(error => handleError(error, res))
     } catch (error) {

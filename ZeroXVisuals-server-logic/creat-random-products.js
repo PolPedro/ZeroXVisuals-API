@@ -14,7 +14,7 @@ function makeid(length) {
 }
 
 
-module.exports = (userId) => {
+module.exports = () => {
 
     return (async () => {
         for (var i = 0; i < 200; i++){
