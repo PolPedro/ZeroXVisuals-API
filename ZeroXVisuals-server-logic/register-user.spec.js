@@ -6,16 +6,17 @@ const registerUser = require('./register-user')
 const { random } = Math
 const { expect } = require('chai')
 require('zeroXVisuals-commons/polyfills/json')
-const { mongoose, models: { User } } = require('zeroXVisuals-data')
+const { mongoose, models: { User, Cart } } = require('zeroXVisuals-data')
 const bcrypt = require('bcryptjs')
 
 describe('logic - register user', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
-    let name, surname, email, password, adress
+    let name, surname, email, password
 
     beforeEach(async () => {
         await User.deleteMany()
+        await Cart.deleteMany()
 
         name = `name-${random()}`
         surname = `surname-${random()}`
@@ -24,7 +25,7 @@ describe('logic - register user', () => {
     })
 
     it('should succeed on valid data', async () => {
-        const result = await registerUser(name, surname, email, password, adress)
+        const result = await registerUser(name, surname, email, password)
 
         expect(result).to.be.undefined
 
@@ -37,16 +38,21 @@ describe('logic - register user', () => {
         expect(user.name).to.equal(name)
         expect(user.surname).to.equal(surname)
         expect(user.email).to.equal(email)
+        expect(user.cart).to.exist
 
         const match = await bcrypt.compare(password, user.password)
 
         expect(match).to.be.true
+
+        const cart = Cart.findById(user.cart)
+
+        expect(cart).to.exist
     })
 
     it('should fail on invalid argument', async () => {
         try{
 
-            const result = await registerUser(undefined, surname, email, password, adress)
+            const result = await registerUser(undefined, surname, email, password)
             // expect(result).to.exist shoud not reach this point
         }catch(error){
             expect(error).to.exist
@@ -56,7 +62,7 @@ describe('logic - register user', () => {
     it('should fail on invalid password', async () => {
         try{
 
-            const result = await registerUser(name, surname, email, '1a4', adress)
+            const result = await registerUser(name, surname, email, '1a4')
             // expect(result).to.exist shoud not reach this point
         }catch(error){
             expect(error).to.exist
@@ -67,11 +73,11 @@ describe('logic - register user', () => {
 
 
     describe('when user already exists', () => {
-        beforeEach(() => User.create({ name, surname, email, password, adress }))
+        beforeEach(() => User.create({ name, surname, email, password }))
 
         it('should fail on trying to register an existing user', async () => {
             try {
-                await registerUser(name, surname, email, password, adress)
+                await registerUser(name, surname, email, password)
                 // throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.exist
@@ -82,7 +88,7 @@ describe('logic - register user', () => {
         })
     })
 
-    afterEach(() => User.deleteMany())
+    afterEach(() =>{ User.deleteMany(), Cart.deleteMany()})
 
     after(mongoose.disconnect)
 })

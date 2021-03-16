@@ -1,8 +1,3 @@
-require('zeroxvisuals-commons/polyfills/string')
-require('zeroxvisuals-commons/polyfills/json')
-const { errors: { UnexistenceError } } = require('zeroxvisuals-commons')
-const { models: { User } } = require('zeroxvisuals-data')
-
 /**
  * Retrieve User
 * @param {string} userId user unique id
@@ -12,7 +7,10 @@ const { models: { User } } = require('zeroxvisuals-data')
 * @throws {UnexistenceError} if user dont exists
 */
 
-
+require('zeroxvisuals-commons/polyfills/string')
+require('zeroxvisuals-commons/polyfills/json')
+const { errors: { UnexistenceError } } = require('zeroxvisuals-commons')
+const { models: { User } } = require('zeroxvisuals-data')
 
 module.exports = (userId) => {
 

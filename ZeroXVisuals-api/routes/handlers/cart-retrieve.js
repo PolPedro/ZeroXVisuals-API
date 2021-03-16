@@ -1,11 +1,13 @@
 const { handleError } = require('../../helpers')
-const { retrievePacks } = require('zeroxvisuals-server-logic')
+const {cartRetrieve} = require('zeroxvisuals-server-logic')
 
 module.exports = (req, res) => {
 
+    const { payload: { sub: userId } } = req
+
     try {
-        retrievePacks()
-            .then((products) => res.send(products))
+        cartRetrieve(userId)
+            .then((cart) => res.send(cart))
             .catch(error => handleError(error, res))
     } catch (error) {
         handleError(error, res)

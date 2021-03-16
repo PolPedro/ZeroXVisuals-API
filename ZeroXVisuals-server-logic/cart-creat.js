@@ -1,5 +1,5 @@
 /**
- * Register User
+ * Creat cart
  *
  * @param {string} userId users name
  * 
@@ -21,6 +21,8 @@ module.exports = (userId) => {
 
         if (cart) throw new DuplicityError(`the cart for this user already exists`)
 
-        await Cart.create({ user: ObjectId(userId) })
+       const newCart = await Cart.create({ user: ObjectId(userId) })
+
+       return newCart._id
     })()
 }

@@ -1,5 +1,6 @@
 const { Schema } = require('mongoose')
 const { utils: { Email } } = require('zeroxvisuals-commons')
+const { ObjectId } = require('../../mongoose')
 const products = require('./products')
 
 module.exports = new Schema({
@@ -26,5 +27,10 @@ module.exports = new Schema({
         required: true
     },
 
-    productsbuy : [{products}]
+    cart: {
+        type: ObjectId,
+        ref: 'Cart'
+    },
+
+    productsbuy : [{type: ObjectId, ref:'Product'}]
 })

@@ -2,6 +2,7 @@ const { Schema } = require('mongoose')
 const { ObjectId } = require('../../mongoose')
 const products = require('./products')
 
+
 module.exports = new Schema({
 
     user: {
@@ -16,6 +17,6 @@ module.exports = new Schema({
         require: true,
     },
 
-    products: [{products}]
+    products: [{type: ObjectId, ref:'Product'}],
      
 })

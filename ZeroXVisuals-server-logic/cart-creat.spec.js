@@ -33,7 +33,7 @@ describe('logic - creat cart', () => {
         
         const result = await cartCreat(id)
 
-        expect(result).to.be.undefined
+        expect(result).to.exist
 
         const carts = await Cart.find()
 

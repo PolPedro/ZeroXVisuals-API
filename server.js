@@ -1,5 +1,7 @@
-const server = require('./zeroXVisuals-api/server')
-const {env: { MONGODB_URL, PORT } } = process
+const server = require('zeroxvisuals-api')
+//const {env: { MONGODB_URL, PORT } } = process
+const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, SECRET, MONGODB_URL } } = process
+const PORT = PORT_CLI || PORT_ENV || 8081
 
 console.debug('starting server')
 
