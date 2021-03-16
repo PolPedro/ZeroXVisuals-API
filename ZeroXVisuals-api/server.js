@@ -22,6 +22,8 @@ module.exports = (MONGODB_URL, PORT) => {
     mongoose.connect(MONGODB_URL)
     .then(() => {
         console.info(`connected to database ${MONGODB_URL}`)
+
+        //TODO SSL CERTIFICATE install helment and other security libraries
         
         const app = express()
 
@@ -34,11 +36,11 @@ module.exports = (MONGODB_URL, PORT) => {
             res.status(404).send('Not Found :(')
         })
         
-        const httpsServer = https.createServer(options, app)
+        // const httpsServer = https.createServer(options, app)
 
-        //app.listen(PORT, () => console.info(`server ${name} ${version} running on port ${PORT}`))
+        app.listen(PORT, () => console.info(`server ${name} ${version} running on port ${PORT}`))
         
-        httpsServer.listen(PORT, () => console.info(`server https${name} ${version} running on port ${PORT}`))
+        // httpsServer.listen(8443, () => console.info(`server https${name} ${version} running on port 8443`))
         
         let interrupted = false
         
