@@ -34,11 +34,11 @@ module.exports = (MONGODB_URL, PORT) => {
             res.status(404).send('Not Found :(')
         })
         
-        // const httpsServer = https.createServer(options, app)
+        const httpsServer = https.createServer(options, app)
 
-        app.listen(PORT, () => console.info(`server ${name} ${version} running on port ${PORT}`))
+        //app.listen(PORT, () => console.info(`server ${name} ${version} running on port ${PORT}`))
         
-        // httpsServer.listen(8443, () => console.info(`server https${name} ${version} running on port 8443`))
+        httpsServer.listen(PORT, () => console.info(`server https${name} ${version} running on port ${PORT}`))
         
         let interrupted = false
         
