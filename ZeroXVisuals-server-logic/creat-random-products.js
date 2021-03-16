@@ -26,14 +26,14 @@ module.exports = () => {
                 link: "https://zeroxvisuals/products/" + makeid(7)
 
             })
-            product.rates.unshift(
-                new Rate ({
-                    userId: ObjectId("6043f6db122f522aa48a2e8e"),
-                    stars:  Math.floor(Math.random() * 5),
-                    date: new Date,
-                    message: makeid(15)
-                })
-            )
+            // product.rates.unshift(
+            //     new Rate ({
+            //         userId: ObjectId("6043f6db122f522aa48a2e8e"),
+            //         stars:  Math.floor(Math.random() * 5),
+            //         date: new Date,
+            //         message: makeid(15)
+            //     })
+            // )
             product.save()
         }
     })()

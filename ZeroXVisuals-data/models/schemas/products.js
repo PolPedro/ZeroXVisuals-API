@@ -29,5 +29,10 @@ module.exports = new Schema({
     },
 
     rates : [rate],
+
+    ratesAverage: {
+        type: Number,
+        default: null
+    }
      
 })

@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "debug": "node --inspect .",
+    "watch": "npx nodemon --ignore ./data .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

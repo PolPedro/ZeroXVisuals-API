@@ -7,5 +7,8 @@ module.exports = {
     addCart: require('./cart-add'),
     removeCart: require('./cart-remove'),
     deleteCart: require('./cart-delete'),
-    cartRetrieve: require('./cart-retrieve')
+    cartRetrieve: require('./cart-retrieve'),
+    productRetrieve: require('./product-retrieve'),
+    updateUser: require('./update-user'),
+    addRating: require('./rating-add')
 }

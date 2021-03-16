@@ -10,8 +10,9 @@
 
 require('zeroxvisuals-commons/polyfills/string')
 const{ errors: { UnexistenceError } } = require('zeroxvisuals-commons')
-const { models: { Cart, Product } } = require('zeroxvisuals-data')
+const { models: { Cart } } = require('zeroxvisuals-data')
 const {mongoose: {ObjectId}} = require('zeroxvisuals-data')
+const user = require('zeroxvisuals-data/models/schemas/user')
 
 
 module.exports = (userId) => {
