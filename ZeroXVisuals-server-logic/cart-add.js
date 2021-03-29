@@ -10,7 +10,7 @@
  */
 
  require('zeroxvisuals-commons/polyfills/string')
- const{ errors: { UnexistenceError } } = require('zeroxvisuals-commons')
+ const{ errors: { UnexistenceError, DuplicityError } } = require('zeroxvisuals-commons')
  const { models: { Cart, Product } } = require('zeroxvisuals-data')
  const {mongoose: {ObjectId}} = require('zeroxvisuals-data')
  
@@ -32,11 +32,19 @@
 
         if (!product) throw new UnexistenceError(`product with id:${productId} dont exists`)
 
-        cart.products.unshift(productId)
+        // || if we dont want to have more than one item ||
 
-        cart.quantity += 1
+        if((cart.products.findIndex((id) => id.toString() === productId)) === -1){
+            cart.products.unshift(productId)
+    
+            cart.quantity += 1
+    
+            await cart.save()
+        }
+        else{
+            throw new DuplicityError(`product with id:${productId} is already in the cart`)
+        }
 
-        await cart.save()
 
     })()
  }

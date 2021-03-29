@@ -10,5 +10,10 @@ module.exports = {
     cartRetrieve: require('./cart-retrieve'),
     productRetrieve: require('./product-retrieve'),
     updateUser: require('./update-user'),
-    addRating: require('./rating-add')
+    addRating: require('./rating-add'),
+    productQuery: require('./product-search-query'),
+    productCategroy: require('./product-search-categroy'),
+    paymentRecieved: require('./payment-receive'),
+    paymentCreat: require('./payment-creat'),
+    awsCreatLink: require('./aws-creat-link')
 }

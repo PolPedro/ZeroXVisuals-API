@@ -5,7 +5,9 @@ const fs = require('fs')
 var http = require('http')
 var https = require('https')
 const { name, version } = require('./package.json')
-const {cors} = require('./middlewares')
+// const {cors} = require('./middlewares')
+const cors = require('cors')
+const helmet = require('helmet')
 const path = require('path')
 const { mongoose } = require('zeroxvisuals-data')
 const { api } = require('./routes')
@@ -14,6 +16,8 @@ const options = {
     key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
     cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'))
 }
+
+var allowedOrigins = ['http://localhost:8080'];
 
 console.debug('starting server')
 
@@ -25,8 +29,18 @@ module.exports = (MONGODB_URL, PORT) => {
         
         const app = express()
 
+        // ||security||
+
+        //security against atacks
+
+        app.use(helmet())
+        app.disable('x-powered-by')
+
+        //TODO configurate cors to only let specific routes enter the appi
         
-        app.use(cors)
+        app.use(cors())
+
+        // ||api directions||
         
         app.use('/api', api)
         

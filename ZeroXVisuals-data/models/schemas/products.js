@@ -13,6 +13,11 @@ module.exports = new Schema({
         required: true
     },
 
+    category: {
+        type: String,
+        require: true
+    },
+
     price: {
         type: Number,
         required: true
@@ -28,11 +33,21 @@ module.exports = new Schema({
         required: true
     },
 
+    Date: {
+        type: Date,
+        default: new Date
+    },
+
     rates : [rate],
 
     ratesAverage: {
         type: Number,
         default: null
+    },
+
+    views: {
+        type: Number,
+        default: 0
     }
      
 })

@@ -81,6 +81,34 @@ describe('logic - remove cart', () => {
 
     })
 
+    it('should fail on reomving product form cart, product not in cart', async () => {
+
+        let cart = await Cart.findOne({user: userId}).lean()
+
+        //control that the cart has all the products
+
+        expect(cart.quantity).to.equal(3)
+
+        expect(cart.products.length).to.equal(3)
+
+        expect(cart.products[0].toString()).to.equal(productId[0].toString())
+
+        expect(cart.products[1].toString()).to.equal(productId[1].toString())
+
+        expect(cart.products[2].toString()).to.equal(productId[2].toString())
+
+        //call removeCart
+
+        await removeCart(userId.toString(), productId[1].toString())
+        
+        await removeCart(userId.toString(), productId[1].toString())
+            .catch((error) => {
+                expect(error).to.exist
+                expect(error.message).to.be.equal(`product with id:${productId[1].toString()} is not in cart`)
+            })
+
+    })
+
     it('should fail on adding product to cart wrong userId', async () => {
 
         const fakeId = '60421acd5dc16d283c54414f'

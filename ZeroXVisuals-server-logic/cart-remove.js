@@ -36,11 +36,13 @@
             return element._id.toString() === productId.toString()
         })
 
-        cart.products.splice(index, 1)
-
-        cart.quantity -= 1
-
-        await cart.save()
+        if(index != -1){
+            cart.products.splice(index, 1)
+            cart.quantity -= 1
+            await cart.save()
+        }else{
+            throw new UnexistenceError(`product with id:${productId} is not in cart`)
+        }
 
     })()
  }
