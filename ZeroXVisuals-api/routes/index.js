@@ -5,10 +5,8 @@ const { registerUser, retrieveUser, authenticateUser, addCart, removeCart, delet
 const bodyParser = require('body-parser')
 const { jwtVerifierExtractor } = require('../middlewares')
 const { handleError } = require('../helpers')
-const { paymentRecieve } = require('zeroxvisuals-server-logic')
 
 const parseBody = bodyParser.json()
-const parseRaw = bodyParser.raw({type: 'application/json'})
 const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
 
 const api = new Router()

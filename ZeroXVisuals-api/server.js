@@ -1,21 +1,13 @@
 require('dotenv').config()
 
 const express = require('express')
-const fs = require('fs')
-var http = require('http')
-var https = require('https')
 const { name, version } = require('./package.json')
 // const {cors} = require('./middlewares')
 const cors = require('cors')
 const helmet = require('helmet')
-const path = require('path')
+const morgan = require('morgan')
 const { mongoose } = require('zeroxvisuals-data')
 const { api } = require('./routes')
-
-const options = {
-    key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
-    cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'))
-}
 
 var allowedOrigins = ['http://localhost:8080'];
 
@@ -31,14 +23,17 @@ module.exports = (MONGODB_URL, PORT) => {
 
         // ||security||
 
-        //security against atacks
-
         app.use(helmet())
         app.disable('x-powered-by')
+        app.set('trust proxy', true)
 
-        //TODO configurate cors to only let specific routes enter the appi
+        // ||cors policy with cors middleware|| // TODO configurate cors to only let specific routes enter the appi
         
         app.use(cors())
+
+        // ||logger with morgan||
+
+        app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length]'))
 
         // ||api directions||
         
@@ -47,12 +42,8 @@ module.exports = (MONGODB_URL, PORT) => {
         app.get('*', (req, res) => {
             res.status(404).send('Not Found :(')
         })
-        
-        // const httpsServer = https.createServer(options, app)
 
         app.listen(PORT, () => console.info(`server ${name} ${version} running on port ${PORT}`))
-        
-        // httpsServer.listen(8443, () => console.info(`server https${name} ${version} running on port 8443`))
         
         let interrupted = false
         

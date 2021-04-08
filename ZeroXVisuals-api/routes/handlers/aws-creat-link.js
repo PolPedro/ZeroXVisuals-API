@@ -7,7 +7,7 @@ module.exports = (req, res) => {
     const { payload: { sub: userId } } = req
     
     try {
-        awsCreatLink()
+        awsCreatLink(userId, productId)
             .then((signedLink) => res.send(signedLink))
             .catch(error => handleError(error, res))
     } catch (error) {
