@@ -32,5 +32,9 @@ module.exports = new Schema({
         ref: 'Cart'
     },
 
+    stripeCustomer : {
+        type: String
+    },
+
     productsbuy : [{type: ObjectId, ref:'Product'}]
 })

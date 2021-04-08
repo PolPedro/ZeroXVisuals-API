@@ -17,9 +17,12 @@ module.exports = (productId) => {
 
     return (async () => {
 
-        const product = await Product.findById(productId).select('-__v').lean()
+        const product = await Product.findById(productId).select('-__v')
 
-        if(!product) throw new UnexistenceError(`product with id: ${userId} dont exists`)
+        if(!product) throw new UnexistenceError(`product with id: ${productId} dont exists`)
+
+        product.views += 1;
+        await product.save()
 
         return product   
 

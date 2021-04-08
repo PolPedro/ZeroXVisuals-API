@@ -16,11 +16,14 @@ function makeid(length) {
 
 module.exports = () => {
 
+    const categroy = ['baners', 'overlays', 'cams', 'packs']
+
     return (async () => {
-        for (var i = 0; i < 200; i++){
+        for (var i = 0; i < 10; i++){
             const product = await Product.create({ 
                 name: makeid(5),
                 description: makeid(20),
+                category: categroy[Math.floor(Math.random() * 4)],
                 price: Math.floor(Math.random() * 100),
                 image: "https://zeroxvisuals/images/" + makeid(7),
                 link: "https://zeroxvisuals/products/" + makeid(7)
