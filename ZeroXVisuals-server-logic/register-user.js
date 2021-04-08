@@ -18,7 +18,7 @@ const creatCart = require('./cart-creat')
  * @throws {DuplicityError} if user already exists
  */
 
-module.exports = (name, surname, email, password) => {
+module.exports = (name, surname, email, password, ip) => {
     String.validate.notVoid(name)
     String.validate.notVoid(surname)
     String.validate.notVoid(email)
@@ -46,6 +46,12 @@ module.exports = (name, surname, email, password) => {
             throw new DuplicityError(error.message)
 
         }
+
+        //add user ip to ip list 
+
+        newUser.ips.push(ip)
+
+        //save newUser
 
         await newUser.save()
 

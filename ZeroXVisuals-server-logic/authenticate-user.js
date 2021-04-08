@@ -17,7 +17,7 @@ const { models: { User } } = require('zeroxvisuals-data')
 const bcrypt = require('bcryptjs')
 
 
-module.exports = (email, password) => {
+module.exports = (email, password, ip) => {
     String.validate.notVoid(email)
     Email.validate(email)
     String.validate.notVoid(password)
@@ -31,6 +31,13 @@ module.exports = (email, password) => {
         const hash = await bcrypt.compare(password, user.password)
 
         if (!hash) throw new CredentialsError(`Wrong email or password`)
+
+        //search if user has logged in with a new adress
+
+        if(user.ips.findIndex((element) => element == ip) == -1){
+            user.ips.push(ip)
+            await user.save()
+        }
 
         return user.id
     })()
