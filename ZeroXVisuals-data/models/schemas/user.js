@@ -36,5 +36,7 @@ module.exports = new Schema({
         type: String
     },
 
-    productsbuy : [{type: ObjectId, ref:'Product'}]
+    productsbuy : [{type: ObjectId, ref:'Product'}],
+
+    ips: [{type: String}]
 })
