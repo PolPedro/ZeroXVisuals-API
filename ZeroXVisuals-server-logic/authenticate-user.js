@@ -32,7 +32,7 @@ module.exports = (email, password, ip) => {
 
         if (!hash) throw new CredentialsError(`Wrong email or password`)
 
-        //search if user has logged in with a new adress
+        //search if user has logged in with a new ip adress
 
         if(user.ips.findIndex((element) => element == ip) == -1){
             user.ips.push(ip)

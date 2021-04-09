@@ -8,6 +8,7 @@ const helmet = require('helmet')
 const morgan = require('morgan')
 const { mongoose } = require('zeroxvisuals-data')
 const { api } = require('./routes')
+const {config: {winston}} = require('zeroxvisuals-commons')
 
 var allowedOrigins = ['http://localhost:8080'];
 
@@ -35,7 +36,7 @@ module.exports = (MONGODB_URL, PORT) => {
 
         // ||logger with morgan||
 
-        app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length]'))
+        app.use(morgan('combined', {stream: winston.stream})) //:remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"
 
         // ||api directions||
         
@@ -58,19 +59,12 @@ module.exports = (MONGODB_URL, PORT) => {
                 console.debug('disconnecting database')
                 
                 mongoose.disconnect()
-                .then(() => console.info('disconnected database'))
-                .catch(error => file.error('could not disconnect from mongo', error))
-                .finally(() => {
-                    console.info(`server ${name} ${version} stopped`)
-                    
-                    setTimeout(() => {
-                        file.close()
-                        
-                        setTimeout(() => {
-                            process.exit()
-                        }, 500)
-                    }, 500)
-                })
+                    .then(() => console.info('disconnected database'))
+                    .catch(error => {throw new Error('could not disconnect from mongo', error)})
+                    .finally(() => {
+                        console.info(`server ${name} ${version} stopped`)
+                        process.exit() // if processs is not ended
+                    })
             }
         })
     })
