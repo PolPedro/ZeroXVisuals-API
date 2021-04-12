@@ -8,7 +8,7 @@ module.exports = (req, res) => {
     try {
         productRetrieve(productId)
             .then((product) => res.send(product))
-            .catch(error => handleError(error, res))
+            .catch(error => handleError(error, res, req))
     } catch (error) {
         handleError(error, res)
     }

@@ -1,13 +1,17 @@
-const server = require('zeroxvisuals-api')
-//const {env: { MONGODB_URL, PORT } } = process
-const { env: { MONGODB_URL } } = process
 // const PORT = PORT_CLI || PORT_ENV || 8081
+//const {env: { MONGODB_URL, PORT } } = process
+
+const server = require('zeroxvisuals-api')
+const chalk = require('chalk')
+const { env: { MONGODB_URL } } = process
 const PORT = process.env.PORT || 8080
 
-console.debug('starting server')
+// ||start server||
 
 try {
-    console.debug('connecting to database')
+    console.debug(chalk.blue('starting server'))
+    console.debug(chalk.blue('connecting to database')) 
+
     server(MONGODB_URL, PORT)
 
 } catch (error) {

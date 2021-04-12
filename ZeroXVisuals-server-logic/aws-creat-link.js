@@ -32,7 +32,6 @@ module.exports = (userId, productId) => {
         
         if(productIndex != -1){
             const {category, name} = user.productsbuy[productIndex]
-
             const client = new S3Client({credentials: {accessKeyId: awsKeyId, secretAccessKey: awsAccessKey}, region: 'eu-central-1'})
             const command = new GetObjectCommand({Bucket: 'zeroxvisuals-packs', Key:`${category}/${name}.rar`})
             const url = await getSignedUrl(client, command, { expiresIn: 60 }) //time to expire 

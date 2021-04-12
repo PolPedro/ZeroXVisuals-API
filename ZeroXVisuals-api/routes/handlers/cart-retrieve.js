@@ -8,7 +8,7 @@ module.exports = (req, res) => {
     try {
         cartRetrieve(userId)
             .then((cart) => res.send(cart))
-            .catch(error => handleError(error, res))
+            .catch(error => handleError(error, res, req))
     } catch (error) {
         handleError(error, res)
     }

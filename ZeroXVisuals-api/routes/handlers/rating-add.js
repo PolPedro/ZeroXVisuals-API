@@ -9,7 +9,7 @@ module.exports = (req, res) => {
     try {
         addRating(productId, userId, stars, message)
             .then(() => res.status(201).send())
-            .catch(error => handleError(error, res))
+            .catch(error => handleError(error, res, req))
     } catch (error) {
         handleError(error, res)
     }

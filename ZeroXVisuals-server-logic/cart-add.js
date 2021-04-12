@@ -22,8 +22,6 @@
  
     return (async () => {
 
-        //TODO no permitir que se pueda coger 2 veces el mismo prouducto
-
         const cart = await Cart.findOne({user: userId})
 
         if (!cart) throw new UnexistenceError(`cart with user id:${userId} dont exists`)
@@ -32,17 +30,19 @@
 
         if (!product) throw new UnexistenceError(`product with id:${productId} dont exists`)
 
-        // || if we dont want to have more than one item ||
+        // ||Restric cart to one item||
 
         if((cart.products.findIndex((id) => id.toString() === productId)) === -1){
+
             cart.products.unshift(productId)
-    
             cart.quantity += 1
-    
             await cart.save()
+            
         }
         else{
+
             throw new DuplicityError(`product with id:${productId} is already in the cart`)
+
         }
 
 

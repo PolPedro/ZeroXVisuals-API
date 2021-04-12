@@ -25,7 +25,7 @@ module.exports = (req, res) => {
         try {
             paymentRecieve(event)
                 .then(() => res.status(200).send())
-                .catch(error => handleError(error, res))
+                .catch(error => handleError(error, res, req))
         } catch (error) {
             handleError(error, res)
         }

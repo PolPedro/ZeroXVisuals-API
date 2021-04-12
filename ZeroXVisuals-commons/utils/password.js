@@ -11,12 +11,13 @@
 
 // "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
 // Minimum eight and maximum 10 characters, at least one uppercase letter, one lowercase letter, one number and one special character:
-
 // "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$"
 
 const {ParametersError} = require('../errors')
 
 const password_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+
+// ||Password sintax validation||
 
 const Password = {
     isPassword(password) {

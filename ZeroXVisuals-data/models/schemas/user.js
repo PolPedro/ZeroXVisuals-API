@@ -1,7 +1,6 @@
 const { Schema } = require('mongoose')
 const { utils: { Email } } = require('zeroxvisuals-commons')
 const { ObjectId } = require('../../mongoose')
-const products = require('./products')
 
 module.exports = new Schema({
 
@@ -36,7 +35,11 @@ module.exports = new Schema({
         type: String
     },
 
-    productsbuy : [{type: ObjectId, ref:'Product'}],
+    productsbuy : [{
+        type: ObjectId, ref:'Product'
+    }],
 
-    ips: [{type: String}]
+    ips: [{
+        type: String
+    }]
 })

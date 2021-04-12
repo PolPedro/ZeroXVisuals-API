@@ -4,6 +4,8 @@ const { product } = require('./schemas')
 const {cart} = require('./schemas')
 const {rate} = require('./schemas')
 
+// ||export data schemas||
+
 module.exports = {
     User: model('User', user),
     Cart: model('Cart', cart),

@@ -8,7 +8,7 @@ module.exports = (req, res) => {
     try {
         cartDelete(userId)
             .then(() => res.send())
-            .catch(error => handleError(error, res))
+            .catch(error => handleError(error, res, req))
     } catch (error) {
         handleError(error, res)
     }

@@ -8,7 +8,7 @@ module.exports = (req, res) => {
     try {
         paymentCreat(userId)
             .then((session) => res.send({ id: session.id }))
-            .catch(error => handleError(error, res))
+            .catch(error => handleError(error, res, req))
     } catch (error) {
         handleError(error, res)
     }
